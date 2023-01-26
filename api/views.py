@@ -32,7 +32,6 @@ class MovieViewSet(viewsets.ModelViewSet):
                 serializer = RatingSerializer(rating, many=False)
                 response = {'message': 'Rating created', 'result': serializer.data}
                 return Response(response, status=status.HTTP_200_OK)
-            
 
         else:
             response = {'message': 'You need to provide stars'}
