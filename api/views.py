@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from .models import Movie, Rating
 from .serializers import MovieSerializer, RatingSerializer
 
@@ -18,9 +18,7 @@ class MovieViewSet(viewsets.ModelViewSet):
             movie = Movie.objects.get(id=pk)
             stars = request.data['stars']
             user = request.user
-            print('***************user***************', user.username)
-            # user = User.objects.get(id=1)
-            
+
             try:
                 rating = Rating.objects.get(user=user.id, movie=movie.id)
                 rating.stars = stars
@@ -39,6 +37,7 @@ class MovieViewSet(viewsets.ModelViewSet):
         else:
             response = {'message': 'You need to provide stars'}
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
